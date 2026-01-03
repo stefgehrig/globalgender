@@ -6,7 +6,7 @@ All data is stored in `/data`. The scripts stored in `/R` contain the following 
 
 - ...
 
-Run in above order, they produce all outputs of the analysis. Outputs of the analysis are stored in the `/results` folder. The Supplementary Materials of the article can be reproduced via the RMarkdown script in the `/report` folder.
+Run in above order, they produce all outputs of the analysis. Outputs of the analysis are stored in the `/results` folder, which also contains the `/results/intermediate/` subfolder for intermediate results saved during analysis. The Supplementary Materials of the article can be reproduced via the RMarkdown script in the `/report` folder.
 
 <br>
 
