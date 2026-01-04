@@ -84,25 +84,24 @@ fontfam <- "Segoe UI"
 geqcol <- rev(paletteer::paletteer_d("ggsci::planetexpress_futurama", n = 3)[c(3,1)] )
 
 # predictions
-prds <- predictions(m,
-            newdata = datagrid(grb_indiv = seq(-1, 1, 0.1), 
-                               grb_mean = c(-1, 1)),
-            conf_level = 0.9,
-            re.form = NA) %>% as_tibble()
+prds <- predictions(m_cross_null$m,
+                    newdata = datagrid(grb_indiv = seq(-1, 1, 0.1), 
+                                       grb_mean = c(-1, 1)),
+                    conf_level = 0.9,
+                    re.form = NA) %>% as_tibble()
 
 c <- attributes(m_cross_null$Xs$grb)$`scaled:center`
 s <- attributes(m_cross_null$Xs$grb)$`scaled:scale`
-m <- m_cross_null$m
 
 prds_plot <- prds %>% 
-  mutate(across(contains("grb_"), ~(.x*s)+c)) %>% # back-transform
+  mutate(across(contains("grb_"), ~unscale(.x, c, s))) %>% # back-transform
   mutate(grb_mean = factor(round(grb_mean,2)))
 
 # plotting
 p_prds <- prds_plot %>% 
   ggplot() + 
-  geom_line(aes(x = grb_indiv, y=estimate, group= grb_mean, col= grb_mean), lwd  = 1) + 
-  geom_ribbon(aes(x = grb_indiv, ymin=conf.low, ymax = conf.high, group= grb_mean, fill= grb_mean),
+  geom_line(aes(x = grb_indiv, y = estimate, group = grb_mean, col = grb_mean), lwd  = 1) + 
+  geom_ribbon(aes(x = grb_indiv, ymin = conf.low, ymax = conf.high, group = grb_mean, fill = grb_mean),
               alpha= 0.1, show.legend = FALSE) + 
   theme_classic(14) +
   theme(text = element_text(family = fontfam),
