@@ -71,7 +71,7 @@ df_pr <- process_hgam(m = m, df_census = df_census, ndraws = ndraws)
 # obtain posterior draws for post-stratified estimates
 df_est <- df_pr %>%
   group_by(year, country, culzone, .draw) %>%
-  summarise(est = weighted.mean(e_geq, pr_stratum),
+  summarise(est = weighted.mean(e_grb, pr_stratum),
             population = sum(population),
             .groups = "drop")
 
@@ -281,7 +281,7 @@ dev.off()
 # plot national trends against survey means
 df_des_est <- dfr %>%
   group_by(year, country) %>%
-  summarise(e_geq = mean(grb),
+  summarise(e_grb = mean(grb),
             culzone = unique(culzone),
             srv = paste0(paste(paste0(unique(srv), unique(wave)), collapse = ", "), " (", unique(year), ")"),
             .groups = "drop")
@@ -298,12 +298,12 @@ p_compare <- purrr::map(split(clzs, 1:length(clzs)),
                                      lwd = 1, alpha = 0.25) +
                      geom_point(
                        data = df_des_est %>% filter(culzone %in% clz),
-                       aes(x = year, y = e_geq),
+                       aes(x = year, y = e_grb),
                        shape = 1,
                        size = 5
                      ) +
                      geom_label(data = df_des_est %>% filter(culzone %in% clz),
-                                aes(x = year, y = e_geq, label = srv), vjust = -1.5, size = 1.25,
+                                aes(x = year, y = e_grb, label = srv), vjust = -1.5, size = 1.25,
                                 family = fontfam) +
                      theme_bw(12) +
                      coord_cartesian(ylim = c(0,100)) +
@@ -355,7 +355,7 @@ saveRDS(m_s , file = "results/intermediate/m_hgam_s.rds")
 df_pr_s <- process_hgam(m = m_s, df_census = df_census, ndraws = ndraws)
 df_est_s <- df_pr_s %>%
   group_by(year, country, culzone, .draw) %>%
-  summarise(est = weighted.mean(e_geq, pr_stratum),
+  summarise(est = weighted.mean(e_grb, pr_stratum),
             population = sum(population),
             .groups = "drop")
 time_means_by_group_s <- get_time_means_by_group(df_est = df_est_s, df = df, ndraws = ndraws)
@@ -387,7 +387,7 @@ df_est_cons <- df_pr %>%
   mutate(pr_stratum_2022 = unique(pr_stratum[2022]),
          population_1995 = unique(population[1995])) %>%
   group_by(year, country, culzone, .draw) %>%
-  summarise(est = weighted.mean(e_geq, pr_stratum_2022),
+  summarise(est = weighted.mean(e_grb, pr_stratum_2022),
             population = sum(population_1995),
             .groups = "drop") %>% 
   group_by(year, .draw) %>%

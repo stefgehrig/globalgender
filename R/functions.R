@@ -103,7 +103,7 @@ process_hgam <- function(m, df_census, ndraws){
     ) %>%
     mutate(
       year  = round(unscale(year_s,  center = attr(m$model$year_s, "scaled:center"), scale = attr(m$model$year_s, "scaled:scale"))),
-      e_geq =       unscale(.fitted, center = attr(m$model$y_s,    "scaled:center"), scale = attr(m$model$y_s,    "scaled:scale"))
+      e_grb =       unscale(.fitted, center = attr(m$model$y_s,    "scaled:center"), scale = attr(m$model$y_s,    "scaled:scale"))
     ) %>%
     select(-year_s, -.row, -.fitted)
   
