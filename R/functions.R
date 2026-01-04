@@ -289,11 +289,11 @@ plot_time_means <- function(df_glob, df_avgc, df_culz, df_hdi){
 }
 
 # fit hierarchical model for fertility
-model_fert_hierarchical <- function(data, outcome, geq_var, covariates, with_age){
+model_fert_hierarchical <- function(data, outcome, covariates, with_age){
   
   # prepare model equation and data
-  form          <- reformulate(c(geq_var, covariates), outcome)
-  data_complete <- data %>% drop_na(all_of(c(outcome, geq_var, covariates)))
+  form          <- reformulate(c("grb", covariates), outcome)
+  data_complete <- data %>% drop_na(all_of(c(outcome, "grb", covariates)))
   
   # create model matrix with country-centered predictors included
   X <- Xs <- bind_cols(model.matrix(form, data =  data_complete), data_complete %>% select(country)) %>% 
@@ -312,7 +312,7 @@ model_fert_hierarchical <- function(data, outcome, geq_var, covariates, with_age
   data_complete <- bind_cols(data_complete, X)
   
   # fit model
-  form_full <- reformulate(c(paste0("`", colnames(X), "`"), if(isTRUE(with_age)) "age" else NULL, "(1 + geq_indiv |country)"), outcome)
+  form_full <- reformulate(c(paste0("`", colnames(X), "`"), if(isTRUE(with_age)) "age" else NULL, "(1 + grb_indiv |country)"), outcome)
   
   m <- lmer(form_full, data = data_complete, REML = TRUE,
             control = lmerControl(optimizer = "bobyqa"))
@@ -379,7 +379,7 @@ build_cross_regrtable <- function(mods){
         term == "var.residual_sd" ~ "Residual SD",
         term == "age" ~ "Age",
         term == "religiosity" ~ "Religiosity",
-        grepl("geq", term) ~ "GRB",
+        grepl("grb", term) ~ "GRB",
         TRUE ~ term
       ),
       estimate_se = paste0(format(round(estimate, 3),nsmall = 3,trim = FALSE), 
@@ -458,14 +458,7 @@ build_cross_regrtable <- function(mods){
     select(-predgroup) %>% 
     kable(
       align = "l",
-      col.names = c("Term", "Effect level", rep(c("Estimate (Std. error)", "p-value"), 3)),
-      caption = "<p align='left';>Results from linear mixed-effects models for number of children among women aged 40 - 49 years with country random intercepts. 
-    GRB and religiosity have been scaled to have mean zero and SD of one. 
-    Reference categories are 'Primary or less' (Education), 'Low' (Income level) and '<5,000' (Town size).
-    The effect of GRB is modeled both within and between countries by mean-centering the variable
-    within countries and including the country mean as additional predictor. Where appropriate, this was also
-    done for other predictors (it was not appropriate for Age, since the data was already restricted to the same age range between all countries).</p>"
-    ) %>% 
+      col.names = c("Term", "Effect level", rep(c("Estimate (Std. error)", "p-value"), 3))) %>% 
     kable_styling() %>% 
     add_header_above(c(" " = 2, "Model 1 (only GRB)" = 2, "Model 2 (with demographics)" = 2, "Model 3 (with religiosity)" = 2)) %>% 
     group_rows(index = table(restab_for_export$predgroup)) %>% 

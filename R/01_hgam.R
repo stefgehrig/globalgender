@@ -13,8 +13,8 @@ library(ggrepel)
 library(paletteer)
 library(countrycode)
 library(geomtextpath)
-
-extrafont::loadfonts(quiet = TRUE)
+library(extrafont)
+loadfonts(quiet = TRUE)
 
 # source custom functions
 source("R/functions.R")
