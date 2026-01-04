@@ -13,7 +13,6 @@ df_evs <- read_dta("data/raw/ZA7503_v3-0-0.dta")
 # ... in WVS
 df_wvs$srv <- "WVS"
 df_wvs$wave <- as.character(df_wvs$S002VS)
-df_wvs$id   <- as.character(remove_labels(df_wvs$S007))
 
 # ... in EVS
 df_evs$srv <- "EVS"
