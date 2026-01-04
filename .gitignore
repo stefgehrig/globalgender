@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+*.exe
+*.log
+data/raw
+results/intermediate
