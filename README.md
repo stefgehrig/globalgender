@@ -20,7 +20,7 @@ The scripts stored in `/R` contain the following:
 
 The script `/R/03_asfr.R` further imports the Stan script that is stored in `/Stan`.
 
-The Supplementary Materials of the article can be reproduced via the RMarkdown script in the `/report` folder. This requires that some intermediate results (model objects from time-consuming fitting routines) are placed inside `results/intermediate` by running the analysis scripts in `/R`. These large files are not part of the repository, but they can be created.
+The Supplementary Materials of the article can be reproduced via the RMarkdown script in the `/report` folder. This requires that some intermediate results (model objects from time-consuming fitting routines) are placed inside `/results/intermediate` by running the analysis scripts in `/R`. The large files are not part of the repository, but they can be recreated.
 
 <br>
 
