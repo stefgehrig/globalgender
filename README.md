@@ -2,11 +2,17 @@
 
 This repository contains data and analysis code to reproduce results from the article **"Demographic Processes Constrain Global Growth in Gender Egalitarianism"**.
 
-All data is stored in `/data`. The scripts stored in `/R` contain the following parts of the analysis:
+All processed data are stored in `/data`. To reproduce data processing (conducted in `/R/00_data.R`), original data files from external sources (see `/data/raw/readme.md`) need to be placed inside `/data/raw/`.
 
-- ...
+The scripts stored in `/R` contain the following:
 
-Run in above order, they produce all outputs of the analysis. Outputs of the analysis are stored in the `/results` folder. The Supplementary Materials of the article can be reproduced via the RMarkdown script in the `/report` folder.
+- `functions.R`: Custom helper functions
+- `00_data.R`: Cleaning, harmonization and integration of external data sources; export of processed data to `/data`
+- `01_hgam.R`, `02_lmm`, `03_asfr.R`, `04_measure.R`: Statistical analysis; export of results to `/results`
+
+The script `/R/03_asfr.R` further imports the Stan script that is stored in `/Stan`.
+
+The Supplementary Materials of the article can be reproduced via the RMarkdown script in the `/report` folder. This requires that some intermediate results (model objects from time-consuming fitting routines) are placed inside `results/intermediate` by running the analysis scripts in `/R`. These large files are not part of the repository, but they can be created.
 
 <br>
 
