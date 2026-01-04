@@ -3,7 +3,7 @@
 This repository contains data and analysis code to reproduce results from the article **"Demographic Processes Constrain Global Growth in Gender Egalitarianism"**.
 
 <p align="center">
-<img src="results/Fig1_change.png" width="700" style="border: 1px solid #000;">
+<img src="results/FigSM_asfr6.png" width="700" style="border: 1px solid #000;">
 </p>
 
 <br>
