@@ -2,8 +2,7 @@
 title: |
   | Supplementary Materials for
   | *"Demographic Processes Constrain Global Growth in Gender Egalitarianism"*
-  |
-subtitle: ""
+date: "**GitHub:** https://github.com/stefgehrig/globalgender"
 author: Plamen Akaliyski, Catherine Bowen, Stefan Gehrig, Vegard Skirbekk
 documentclass: article
 output:
