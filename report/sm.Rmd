@@ -254,6 +254,8 @@ $$
 
 The map in Figure 1D in the main text presents point estimates (posterior means) for the country-wise contrasts $\mu^j(2022) - \mu^j(1995)$.
 
+\pagebreak
+
 **Further analyses**
 
 In RQ3, we explored the role of differential population growth for explaining the global trend. The question was approached by further processing the results from above HGAM with post-stratification analysis in three different ways. First, we fit the Bayesian linear regression model
