@@ -70,11 +70,17 @@ m_cross_demogr_relig <- model_fert_hierarchical(
   with_age = TRUE
 )
 
+# export regression table
 restab_for_export <- build_cross_regrtable(
   list(m_cross_null$m, m_cross_demogr$m, m_cross_demogr_relig$m)
 )
 
 cat(restab_for_export, file = "results/Tab1_nrchildren.html")
+
+# print confidence intervals
+confint(m_cross_null$m, level = 0.9)
+# grb_indiv   -0.125902040 -0.07854154
+# grb_mean    -0.775936972 -0.46929010
 
 ##############
 #### plot ####

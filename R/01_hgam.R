@@ -345,7 +345,7 @@ adultsinsample <- df_census %>% filter(year == 2022) %>%
   filter(country %in% unique(dfr_s$country)) %>%
   summarise(population = sum(population)) %>% pull(population)
 adultsinworld <- df_census_world %>% filter(year == 2022) %>% pull(population)
-(adultsinsample / adultsinworld * 100) %>% round(1) # 79.7
+(adultsinsample / adultsinworld * 100) %>% round(1) # 79.7%
 
 # ... model fit
 m_s <- bam(formula = f, data = dfr_s, family = "gaussian", nthreads = 15, method = "fREML")
