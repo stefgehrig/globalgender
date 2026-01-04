@@ -196,7 +196,7 @@ fit_derived <- fit_derived %>%
     # integrate over full asfr curve
     tfr_h = tfr1_h + tfr2_h,
     tfr_l = tfr1_l + tfr2_l,
-    # find age at which integral equals 1/2 (fert_target = 0.5)
+    # find age at which integral equals fert_target = 0.5
     agef1_h = if_else(tfr1_h >= fert_target, 
                       mu_h - erfinv(erf(mu_h / sigma1_h - min_age / sigma1_h) - (2*fert_target) / (sqrt(pi) * c1_h * sigma1_h)) * sigma1_h,
                       mu_h + erfinv((2*(fert_target - tfr1_h)) / (sqrt(pi) * c1_h * sigma2_h)) * sigma2_h),
@@ -297,8 +297,8 @@ fit_derived %>%
     quantile(delta_tfr, 0.95)
   ) 
 # posterior differences:
-# Age:  1.52  [1.15; 1.90 ]
-# TFR: -0.173 [-0.256; -0.0899]
+# delta_age: 1.52  [1.15; 1.90]
+# delta_tfr: -0.173 [-0.256; -0.0899]
 
 # plot posterior probability for rankings
 fit_nations <- fit %>%
@@ -388,7 +388,7 @@ dev.off()
 # ... and print
 fit_nations %>% 
   group_by(.draw) %>% 
-  summarise(tfr_l_higher = mean(tfr_l > tfr_h), # n = 101 countries with a comparison per draw
+  summarise(tfr_l_higher = mean(tfr_l > tfr_h),
             agef1_l_lower = mean(agef1_l < agef1_h, na.rm = TRUE)) %>%
   pivot_longer(cols = contains("_l_"), names_to = "y", values_to = "x") %>% 
   group_by(y) %>% 
@@ -399,8 +399,8 @@ fit_nations %>%
   )
 
 # posterior probabilities:
-# agef1_l_lower      0.920 [0.861; 0.970]
-# tfr_l_higher       0.823 [0.713; 0.921]
+# agef1_l_lower: 0.920 [0.861; 0.970]
+# tfr_l_higher: 0.823 [0.713; 0.921]
 
 # plot cumulative asfr by country
 # ... prepare data frame
@@ -481,9 +481,9 @@ for(i in 1:length(p_compare)){
   dev.off()
 }
 
-######################################################
-#### tables with global model parameter estimates ####
-######################################################
+###############################################
+#### tables with model parameter estimates ####
+###############################################
 tab_asfrpostpars <- fit_derived %>% 
   summarise(across(.cols = (contains("_l") | contains("_h")) & !contains("tfr") & !contains("agef1"), 
                    ~format(round(mean(.x), 2), nsmall = 2))) %>% 

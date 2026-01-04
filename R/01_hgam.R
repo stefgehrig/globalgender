@@ -366,7 +366,7 @@ p_time_s <- plot_time_means(df_glob = time_means_by_group_s$df_glob,
                             df_culz = time_means_by_group_s$df_culz, 
                             df_hdi  = time_means_by_group_s$df_hdi)
 
-png("results/FigSM_changesens.png", width = 5000, height = 1500, res = 350)
+png("results/FigSM_changesens.png", width = 5000, height = 1500, res = 360)
 p_time_s
 dev.off()
 

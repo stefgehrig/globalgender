@@ -87,7 +87,7 @@ p2 <- ggplot(alphas, aes(x = culzone, y = alpha)) +
         strip.text = element_text(face = "bold"),
         text = element_text(family = fontfam)) 
 
-# compose combined plot
+# compose all plots
 p <- p1 + p2 + plot_layout(width = c(3,1)) + plot_annotation(tag_levels = "A")
 
 png("results/FigSM_measure.png", width = 3600, height = 1800, res = 375)
