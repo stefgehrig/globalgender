@@ -6,5 +6,6 @@
 *.exe
 *.log
 data/raw/*
-!data/raw/*.md
+!data/raw/readme.md
+!data/raw/Cultural_Map.csv
 results/intermediate
