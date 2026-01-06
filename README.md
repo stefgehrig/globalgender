@@ -2,6 +2,10 @@
 
 This repository contains data and analysis code to reproduce results from the article **"Demographic Processes Constrain Global Growth in Gender Egalitarianism"**.
 
+<p align="center">
+<img src="results/FigSM_asfr2.png" width="700" style="border: 1px solid #000;">
+</p>
+
 ### Description
 
 All processed data are stored in `/data`. To reproduce data processing (conducted in `/R/00_data.R`), original data files from external sources (see `/data/raw/readme.md`) need to be placed inside `/data/raw/`.
