@@ -451,6 +451,14 @@ df_est_cons %>%
             upr = quantile(est_cons, 0.95))
 # 2022  57.0  55.0  59.1
 
+# ... print estimate of relative difference to observed
+drws_1995 <- df_est_curr$est_curr[df_est_curr$year==1995]
+drws_2022_curr <- df_est_curr$est_curr[df_est_curr$year==2022]
+drws_2022_cons <- df_est_cons$est_cons
+drws_delta_curr <- drws_2022_curr - drws_1995
+drws_delta_cons <- drws_2022_cons - drws_1995
+median((drws_delta_cons - drws_delta_curr)/drws_delta_curr) # 0.7180384
+
 # plot correlation of population size and GRB at two different time points
 df_cor <- df_est %>% 
   filter(year %in% c(1995,2022)) %>% 
