@@ -84,7 +84,7 @@ hdicols <- paletteer_d("colRoz::v_acanthurus", n = length(unique(dfr$hdicode)), 
 culzcols <- paletteer_d("ggsci::planetexpress_futurama", n = length(unique(dfr$culzone)))
 countrycols <- colorRampPalette(paletteer_d("ggsci::planetexpress_futurama"))(length(unique(dfr$country)))
 fillscale <- scale_fill_paletteer_c("scico::vikO", na.value="white", direction =-1, breaks = seq(-40,40,20), limits = c(-75,75))
-cfcol <- paletteer_d("ggsci::planetexpress_futurama", n = 5)[c(1,4,5)] 
+cfcol <- paletteer_d("ggsci::planetexpress_futurama", n = 5)[c(4,5)] 
 
 # histogram
 p_hist <- dfr %>% 
@@ -366,7 +366,7 @@ p_time_s <- plot_time_means(df_glob = time_means_by_group_s$df_glob,
                             df_culz = time_means_by_group_s$df_culz, 
                             df_hdi  = time_means_by_group_s$df_hdi)
 
-png("results/FigSM_changesens.png", width = 5000, height = 1500, res = 360)
+png("results/FigSM_changesens.png", width = 5000, height = 1500, res = 375)
 p_time_s
 dev.off()
 
@@ -409,18 +409,17 @@ p_cons <- df_cons %>%
   ggplot() + 
   stat_pointinterval(
     aes(x = factor(year), y = est, col = type, fill = type), 
-    alpha = 0.5,
+    alpha = 0.75,
     position = position_dodge(0.25),
     size = 8,
     .width = c(.9),
     point_interval = "mean_qi"
   ) + 
   coord_flip(ylim = c(49,63)) +
-  theme_minimal(14) +
+  theme_classic(14) +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major.x = element_blank(),
         legend.position = "none",
-        plot.caption = element_text(color = cfcol[1], size = 12),
         text = element_text(family = fontfam)) +
   labs(y = "Global mean GRB",
        x = "Year") + 
@@ -468,13 +467,14 @@ df_cor <- df_est %>%
 
 p_cor <- df_cor  %>% 
   ggplot() + 
+  geom_hline(yintercept = 0, lty = 2, lwd = 0.5) +
   stat_pointinterval(
     aes(x = factor(year), y= r), 
-    alpha = 0.5, size = 8, .width = c(.9),
+    alpha = 0.75, size = 8, .width = c(.9),
     point_interval = "mean_qi", key_glyph = draw_key_rect
   ) +
   coord_flip() +
-  theme_minimal(14) +
+  theme_classic(14) +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major.x = element_blank(),
         legend.position = "none",
@@ -552,5 +552,5 @@ p_fct <- pred_fct %>%
 
 # compose all plots
 png("results/Fig2_pop.png", width = 4400, height = 3400, res = 510)
-p_fct / (p_cons + p_cor) + plot_layout(heights = c(1.1,1)) + plot_annotation(tag_levels = "A")
+p_fct / (p_cons + p_cor) + plot_layout(heights = c(1.2, 1)) + plot_annotation(tag_levels = "A")
 dev.off()
