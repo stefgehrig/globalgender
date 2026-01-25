@@ -295,7 +295,7 @@ fit_derived %>%
     mean(delta_tfr),
     quantile(delta_tfr, 0.05),
     quantile(delta_tfr, 0.95)
-  ) 
+  ) %>% t()
 # posterior differences:
 # delta_age: 1.52  [1.15; 1.90]
 # delta_tfr: -0.173 [-0.256; -0.0899]

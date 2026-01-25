@@ -63,7 +63,8 @@ p1 <- ggplot(loadings, aes(x = group_name, y = est)) +
 #### cronbach's alpha ####
 ##########################
 # global
-alpha(dfr[,c("gender_jobs", "gender_lead", "gender_univ")])$total["raw_alpha"] %>% round(2) # 0.66
+alpha(dfr[,c("gender_jobs", "gender_lead", "gender_univ")])$total["raw_alpha"] %>% 
+  round(2) # 0.66
 
 # by zone
 alphas <- map_dfr(unique(dfr$culzone), function(x){
