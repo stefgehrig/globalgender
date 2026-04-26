@@ -384,8 +384,8 @@ df_est_curr <- df_est %>% filter(year %in% c(1995,2022)) %>%
 df_est_cons <- df_pr %>%
   filter(year %in% c(1995,2022)) %>% 
   group_by(demogr_grp_country) %>%
-  mutate(pr_stratum_2022 = unique(pr_stratum[2022]),
-         population_1995 = unique(population[1995])) %>%
+  mutate(pr_stratum_2022 = unique(pr_stratum[year == 2022]),
+         population_1995 = unique(population[year == 1995])) %>%
   group_by(year, country, culzone, .draw) %>%
   summarise(est = weighted.mean(e_grb, pr_stratum_2022),
             population = sum(population_1995),
@@ -526,7 +526,7 @@ fit_pop <- brm(
   data      = df_mod,
   control   = list(adapt_delta = 0.99),
   warmup    = 1e3,
-  iter      = 2e3,
+  iter      = ndraws,
   chains    = 2,
   cores     = 2,
   seed      = 1,
