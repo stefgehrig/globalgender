@@ -93,7 +93,7 @@ for (i in 1:length(fig_files)){
 
 # Association of GRB and number of children {#sm2}
 
-Figure \ref{fig:lmm} shows the estimated effects of an individual woman's GRB (horizontal axis) and of the mean GRB among women in the same country (colored lines) on number of children reported in the survey, obtained in the linear mixed-effects model (LMM; see Supplementary Materials \ref{sm5lmm}) reported as Model 1 in Table 1 in the main text. The model included only the most recent survey per country, but not older than year 2010. For the figure, effects were back-transformed to the original predictor scale (0-100), values for the random intercept and slope were set to zero, and the value of the only other fixed-effect predictor (age) was set to the sample mean (zero on the standardized scale). 
+Figure \ref{fig:lmm} shows the estimated effects of an individual woman's GRB (horizontal axis) and of the mean GRB among women in the same country (colored lines) on number of children reported in the survey, obtained in the linear mixed-effects model (LMM; see Supplementary Materials \ref{sm5lmm}) reported as Model 1 in Table 1 in the main text. The model included only the most recent survey per country, but not older than year 2010. For the figure, effects were back-transformed to the original predictor scale (0-100) and values for the random intercept and slope were set to zero.
 
 The figure allows us to compare the effect of a two-standard-deviation (SD) increase in GRB *within* countries and *between* countries. The between-country effect is markedly larger. Both effect estimates should be interpreted as mere associations, produced by causal processes outside the scope of this study. Results from Models 2 and 3 in Table 1 in the main text demonstrate examples for plausible variables to which some of the covariation could be attributed (e.g., education, religiosity). Note also that the estimated SD in number of children between countries *unexplained* by GRB is comparable in size with the between-country effect of a one SD increase in GRB (see Table 1 in the main text). Hence, there are factors operating on the country level unrelated to GRB that also contribute substantially to variation in (our proxy of) completed cohort fertility.
 
@@ -440,11 +440,19 @@ The priors were
 \end{pmatrix}\right), \\
 \pmb{\Sigma} &= \text{diag}(\pmb{\tau}) \cdot \pmb{\Omega} \cdot \text{diag}(\pmb{\tau}), \\
 \pmb{\Omega} &\sim \text{LKJ}(1), \\
-\pmb{\tau} &\sim \text{Half-}\mathcal{N}_8(\pmb{0}, \pmb{I}_8).
+\pmb{\tau} &\sim \text{Half-}\mathcal{N}_8\left(\pmb{0}, \text{diag}\begin{pmatrix}
+0.5^2 \\
+0.2^2 \\
+0.75^2 \\
+0.75^2 \\
+0.5^2 \\
+0.2^2 \\
+0.75^2 \\
+0.75^2
+\end{pmatrix}\right).
 \end{align*}
 
 For example, this implied a prior range ($95\%$ prior probability) for the age of highest fertility in any subpopulation in the average country of
-
 $$
 \exp\left(\log(25) \pm 1.96 \cdot 0.2\right) = \{16.9; 37.0\}.
 $$
@@ -452,7 +460,7 @@ This range contains estimated ages of peak fertility in countries as diverse as 
 $$
 \exp\left(\log(0.125) \pm 1.96 \cdot 0.5\right) = \{0.05; 0.33\},
 $$
-thus providing a reasonable, yet soft restriction. Note that extreme values for some countries and their subpopulations beyond this range are not excluded. This is because individual country parameters $\pmb{b}_i$ have larger variance, given our hierarchical prior for $\pmb{\Sigma}$ that allows for between-country heterogeneity.
+thus providing a reasonable, yet soft restriction. Note that extreme values for some countries and their subpopulations beyond this range are not excluded. This is because individual country parameters $\pmb{b}_i$ have larger prior variance than the average-country parameter $\pmb{\beta}$, given our hierarchical prior for $\pmb{\Sigma}$ that allows for between-country heterogeneity.
 
 The model was fit via MCMC in Stan v2.37 [@carpenter_stan_2017] using the `cmdstanr` interface v0.9.0 [@gabry_cmdstanr_2025]. The model was implemented in a non-centered reparameterization and using a summation over discrete age values, in line with the representation of ages in the data, in place of the integration shown in equation \ref{eq:cumsum}. We sampled 2,000 draws from the joint posterior using two chains (1,000 posterior draws per chain) after 1,000 warm-up iterations each with the NUTS algorithm using the sampler setting `adapt_delta = 0.99` and default maximum tree depth 10. Convergence and mixing were checked with the R hat diagnostic, trace plots and autocorrelation plots, which all indicated no serious sampling issues; neither did Stan's sampler diagnostics indicate any problems (`r sum(asfrfit$diagnostic_summary()$num_divergent)` divergences, `r sum(asfrfit$diagnostic_summary()$num_max_treedepth)` occurrences of maximum tree depth, E-BFMI values `r paste(format(round(asfrfit$diagnostic_summary()$ebfmi, 3), nsmall = 3), collapse = ", ")` for the two chains). 
 
@@ -479,13 +487,11 @@ kable(tab_asfrpostcors, booktabs = TRUE,
 Other interesting quantities could be derived from the model's posterior by running the respective calculations repeatedly on the MCMC samples, like 
 
 - the posterior distribution of total fertility rate for a subpopulation $k$ (either for the average country, or country $i$), which was simply the area under the posterior fertility curve for the childbearing ages, i.e.,
-
 $$
 \int^{49}_{0} f^{k}_i(x) \, dx, \\
 $$
 
 - the posterior distribution of age at which average fertility equaled 0.5 (one child per two women^[The average fertility of 0.5 was chosen as a reference for comparison of fertility timing to ensure that all countries could be compared to the same standard, including very low-fertility countries, where posterior distributions put a considerable probability on values of total fertility rate $< 1$.]) for a subpopulation $k$ (either for the average country, or country $i$), which was simply the age $x^*$ at which the area under the curve added up to exactly 0.5, i.e.,
-
 $$
 x^* \text{ such that } \int^{x^*}_{0} f^{k}_i(a) \, da = 0.5,
 $$
