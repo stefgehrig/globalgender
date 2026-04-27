@@ -1,6 +1,6 @@
 ---
 title: |
-  | Supplementary Materials for
+  | Supplementary Material for
   | *"Demographic processes constrain global growth in gender egalitarianism"*
 date: |
   |
@@ -21,6 +21,7 @@ output:
 header-includes:
  \renewcommand{\thefigure}{S\arabic{figure}}
  \renewcommand{\thetable}{S\arabic{table}}
+ \renewcommand{\thesection}{S\arabic{section}}
  \usepackage{caption}
  \captionsetup{labelfont=bf}
  \usepackage{fontspec}
