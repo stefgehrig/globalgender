@@ -1,6 +1,6 @@
 # globalgender
 
-This repository contains data and analysis code to reproduce results from the article **"Demographic processes constrain global growth in gender egalitarianism"**.
+This repository contains data and analysis code to reproduce results from the article **"Demographic processes constrain global growth in gender egalitarianism"** (https://doi.org/10.1093/pnasnexus/pgag133).
 
 <p align="center">
 <img src="results/FigSM_asfr2.png" width="700" style="border: 1px solid #000;">
